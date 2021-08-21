@@ -19,6 +19,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    public final void configureAuthentication(
+            final AuthenticationManagerBuilder authenticationManagerBuilder) {
+        try {
+            authenticationManagerBuilder.userDetailsService(this.userDetailsService)
+                    .passwordEncoder(passwordEncoder());
+        } catch (final Exception e) {
+            System.out.println("Exception while security config");
+        }
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf()

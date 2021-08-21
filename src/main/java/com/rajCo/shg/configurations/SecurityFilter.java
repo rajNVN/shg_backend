@@ -1,7 +1,9 @@
 package com.rajCo.shg.configurations;
 
 import com.rajCo.shg.entities.Auth;
+import com.rajCo.shg.models.AuthModel;
 import com.rajCo.shg.repositories.AuthDao;
+import com.rajCo.shg.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,17 +24,24 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     AuthDao authDao;
 
+    @Autowired
+    JWTUtil jwtUtil;
+
     @Override
     protected void doFilterInternal(final HttpServletRequest request,
                                     final HttpServletResponse response, final FilterChain chain) throws ServletException, IOException {
-        String userName = request.getHeader("auth");
-        Auth authDetails = authDao.getAuthDetailsByUsername(userName);
-        if(authDetails != null) {
+        String token = request.getHeader("auth");
+        if(jwtUtil.validateToken(token)) {
+            AuthModel authDetails = jwtUtil.getUserFromToken(token);
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
                     authDetails.getUsername(), authDetails.getPassword(),
-                    getAuthorities(authDetails.getIsAdmin().intValue() == 1)));
+                    getAuthorities(authDetails.isAdmin())));
             chain.doFilter(request, response);
         }
+//        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
+//                "a", "b",
+//                getAuthorities(true)));
+//        chain.doFilter(request, response);
         response.setStatus(403);
         response.getWriter().write("Unauthorised");
     }

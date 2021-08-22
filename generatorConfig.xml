@@ -31,8 +31,13 @@
            <property name="enableSubPackages" value="true"/>
        </javaClientGenerator>
 
-        <table tableName="auth"/>
-        <table tableName="members"/>
+        <table tableName="auth">
+            <columnOverride column="is_admin" javaType="java.lang.Boolean"/>
+        </table>
+
+        <table tableName="members">
+            <generatedKey column="user_id" sqlStatement="select max(user_id) +1 from members" ></generatedKey>
+        </table>
         <table tableName="group"/>
         <table tableName="group_users"/>
         <table tableName="loan"/>

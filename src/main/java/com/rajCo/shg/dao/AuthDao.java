@@ -1,4 +1,4 @@
-package com.rajCo.shg.repositories;
+package com.rajCo.shg.dao;
 
 import com.rajCo.shg.entities.Auth;
 import com.rajCo.shg.mappers.AuthDynamicSqlSupport;
@@ -21,6 +21,10 @@ public class AuthDao {
                 AuthDynamicSqlSupport.password, AuthDynamicSqlSupport.isAdmin)
                 .from(AuthDynamicSqlSupport.auth).where(AuthDynamicSqlSupport.username, isEqualTo(username))
                 .build().render(RenderingStrategy.MYBATIS3));
+    }
+
+    public int addNewAuth(Auth auth){
+        return authMapper.insert(auth);
     }
 
 }

@@ -19,7 +19,7 @@ public final class AuthDynamicSqlSupport {
     public static final SqlColumn<String> password = auth.password;
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: auth.is_admin")
-    public static final SqlColumn<Byte> isAdmin = auth.isAdmin;
+    public static final SqlColumn<Boolean> isAdmin = auth.isAdmin;
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: auth.question1")
     public static final SqlColumn<String> question1 = auth.question1;
@@ -47,7 +47,7 @@ public final class AuthDynamicSqlSupport {
 
         public final SqlColumn<String> password = column("password", JDBCType.VARCHAR);
 
-        public final SqlColumn<Byte> isAdmin = column("is_admin", JDBCType.TINYINT);
+        public final SqlColumn<Boolean> isAdmin = column("is_admin", JDBCType.TINYINT);
 
         public final SqlColumn<String> question1 = column("question1", JDBCType.VARCHAR);
 

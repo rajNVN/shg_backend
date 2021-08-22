@@ -1,12 +1,11 @@
-package com.rajCo.shg;
+package com.rajCo.shg.service;
 
 import com.rajCo.shg.configurations.CommonException;
 import com.rajCo.shg.entities.Auth;
 import com.rajCo.shg.models.AuthModel;
-import com.rajCo.shg.repositories.AuthDao;
+import com.rajCo.shg.dao.AuthDao;
 import com.rajCo.shg.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service

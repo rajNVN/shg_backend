@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
@@ -42,6 +43,7 @@ public interface MembersMapper {
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source Table: members")
     @InsertProvider(type=SqlProviderAdapter.class, method="insert")
+    @SelectKey(statement="select max(user_id) +1 from members", keyProperty="record.userId", before=true, resultType=Integer.class)
     int insert(InsertStatementProvider<Members> insertStatement);
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source Table: members")
@@ -114,7 +116,7 @@ public interface MembersMapper {
     default int insertSelective(Members record) {
         return insert(SqlBuilder.insert(record)
                 .into(members)
-                .map(userId).toPropertyWhenPresent("userId", record::getUserId)
+                .map(userId).toProperty("userId")
                 .map(name).toPropertyWhenPresent("name", record::getName)
                 .map(phone).toPropertyWhenPresent("phone", record::getPhone)
                 .map(mail).toPropertyWhenPresent("mail", record::getMail)

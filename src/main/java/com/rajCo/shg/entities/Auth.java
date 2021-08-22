@@ -13,7 +13,7 @@ public class Auth {
     private String password;
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: auth.is_admin")
-    private Byte isAdmin;
+    private Boolean isAdmin;
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: auth.question1")
     private String question1;
@@ -64,12 +64,12 @@ public class Auth {
     }
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: auth.is_admin")
-    public Byte getIsAdmin() {
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: auth.is_admin")
-    public void setIsAdmin(Byte isAdmin) {
+    public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 

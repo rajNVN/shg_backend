@@ -1,10 +1,8 @@
 package com.rajCo.shg.controllers;
 
-import com.rajCo.shg.AuthService;
-import com.rajCo.shg.entities.Auth;
+import com.rajCo.shg.service.AuthService;
 import com.rajCo.shg.models.AuthModel;
 import com.rajCo.shg.models.response.Response;
-import com.rajCo.shg.repositories.AuthDao;
 import com.rajCo.shg.utils.JWTUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -12,13 +10,11 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;

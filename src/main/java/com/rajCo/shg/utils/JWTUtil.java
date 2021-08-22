@@ -1,5 +1,7 @@
 package com.rajCo.shg.utils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -37,6 +40,10 @@ public final class JWTUtil {
         try {
             final JWTVerifier verifier = JWT.require(getAlgorithm(secret)).build();
             verifier.verify(token);
+            Date expiration = JWT.decode(token).getClaim("exp").asDate();
+            if(DateTime.now().isAfter(new DateTime(expiration))){
+                return false;
+            }
         } catch (final JWTVerificationException e) {
             return false;
         }
@@ -51,7 +58,7 @@ public final class JWTUtil {
         final Claim isAdmin = claims.get(IS_ADMIN);
 
         return AuthModel.builder()
-                .userId(null == userId ? null : userId.asString())
+                .userId(null == userId ? null : userId.asInt())
                 .username(null == username ? null : username.asString())
                 .isAdmin(null == isAdmin ? null : isAdmin.asBoolean())
                 .build();
@@ -77,5 +84,17 @@ public final class JWTUtil {
 
     private Algorithm getAlgorithm(final String secret) {
         return Algorithm.HMAC256(secret);
+    }
+
+    public static String getEncodedPassword(String password) throws NoSuchAlgorithmException {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(password.getBytes());
+            byte[] bytes = m.digest();
+            StringBuilder s = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            return s.toString();
     }
 }

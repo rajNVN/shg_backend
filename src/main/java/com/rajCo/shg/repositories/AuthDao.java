@@ -17,7 +17,8 @@ public class AuthDao {
     AuthMapper authMapper;
 
     public Auth getAuthDetailsByUsername(String username){
-        return authMapper.selectOne(select(AuthDynamicSqlSupport.username, AuthDynamicSqlSupport.password, AuthDynamicSqlSupport.isAdmin)
+        return authMapper.selectOne(select(AuthDynamicSqlSupport.userId, AuthDynamicSqlSupport.username,
+                AuthDynamicSqlSupport.password, AuthDynamicSqlSupport.isAdmin)
                 .from(AuthDynamicSqlSupport.auth).where(AuthDynamicSqlSupport.username, isEqualTo(username))
                 .build().render(RenderingStrategy.MYBATIS3));
     }

@@ -32,7 +32,8 @@ public class AuthService {
                 throw CommonException.newCommonException(1001, "Username and password didn't match", null);
             }
 
-        request.setAdmin(dbUserDetails.getIsAdmin().toString().equals("1"));
+        request.setAdmin(dbUserDetails.getIsAdmin().toString().equals("0"));
+            request.setPassword(null);
         request.setUserId(dbUserDetails.getUserId());
         return jwtUtil.generateAccessToken(request);
     }

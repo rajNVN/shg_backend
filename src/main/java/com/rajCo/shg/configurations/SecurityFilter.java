@@ -53,7 +53,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected final boolean shouldNotFilter(HttpServletRequest request) {
         final String path = request.getRequestURI();
-        if(path.contains("login") || path.contains("swagger") || path.contains("api-docs") || path.equals("/") || path.contains("csrf") || path.contains("life")) {
+        if(path.contains("login") || path.contains("swagger") || path.contains("api-docs") || path.equals("/") || path.contains("csrf") || path.contains("life") || path.contains("signup")) {
             return true;
         }
         return false;
